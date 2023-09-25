@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso à Câmera</title>
+    <style>
+        /* Estilos para tornar o layout responsivo */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .card {
+            max-width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        #camera-feed {
+            margin-top: 20px;
+        }
+
+        #captured-photo {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Estilos específicos para dispositivos menores */
+        @media (max-width: 768px) {
+            .card {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Exemplo de Acesso à Câmera</h1>
+        <p>Clique no botão abaixo para acessar a câmera do seu dispositivo:</p>
+        <button id="start-camera">Iniciar Câmera</button>
+        <button id="take-photo" disabled>Tirar Foto</button>
+        <div id="camera-feed"></div>
+        <canvas id="photo-canvas" style="display: none;"></canvas>
+        <img id="captured-photo" style="display: none;">
+    </div>
+
+    <script>
+        let videoStream;
+        let videoElement;
+        let photoCanvas;
+        let capturedPhoto;
+
+        document.getElementById('start-camera').addEventListener('click', function() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // Solicite acesso à câmera
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        videoStream = stream;
+                        // Crie um elemento de vídeo para exibir o feed da câmera
+                        videoElement = document.createElement('video');
+                        videoElement.srcObject = stream;
+                        videoElement.play();
+
+                        // Adicione o elemento de vídeo à div com o ID "camera-feed"
+                        var cameraFeedDiv = document.getElementById('camera-feed');
+                        cameraFeedDiv.innerHTML = ''; // Limpe qualquer conteúdo anterior
+                        cameraFeedDiv.appendChild(videoElement);
+
+                        // Ative o botão "Tirar Foto"
+                        document.getElementById('take-photo').disabled = false;
+                    })
+                    .catch(function(error) {
+                        console.error('Erro ao acessar a câmera: ', error);
+                    });
+            } else {
+                console.error('Seu navegador não suporta a API de mídia WebRTC.');
+            }
+        });
+
+        document.getElementById('take-photo').addEventListener('click', function() {
+            if (videoElement) {
+                // Crie um canvas para capturar a foto
+                photoCanvas = document.getElementById('photo-canvas');
+                photoCanvas.width = videoElement.videoWidth;
+                photoCanvas.height = videoElement.videoHeight;
+                var context = photoCanvas.getContext('2d');
+
+                // Desenhe o quadro atual do vídeo no canvas
+                context.drawImage(videoElement, 0, 0, photoCanvas.width, photoCanvas.height);
+
+                // Exiba a imagem capturada
+                capturedPhoto = document.getElementById('captured-photo');
+                capturedPhoto.src = photoCanvas.toDataURL('image/png');
+                capturedPhoto.style.display = 'block';
+
+                // Esconda o feed da câmera
+                videoElement.style.display = 'none';
+
+                // Desligue o feed da câmera
+                videoStream.getTracks().forEach(function(track) {
+                    track.stop();
+                });
+
+                // Desative o botão "Tirar Foto"
+                document.getElementById('take-photo').disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>
