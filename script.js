@@ -1,25 +1,27 @@
-var video = document.querySelector('video');
+canvas.height = video.videoHeight;
+//     canvas.width = video.videoWidth;
+//   
+(function () {
+    'use strict';
+    var forms = document.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+          form.classList.add('was-validated');
+  
+          // Após 3 segundos, redefina os alertas de validação para seus estados normais
+          setTimeout(function () {
+            form.classList.remove('was-validated');
+          }, 3000); // 3000 milissegundos (3 segundos)
+        }
+      }, false);
+    });
+  })();
 
-navigator.mediaDevices.getUserMedia({video:true})
-.then(stream => {
-    video.srcObject = stream;
-    video.play();
-})
-.catch(error => {
-    console.log(error);
-})
-
-document.querySelector('button').addEventListener ('click' , () => {
-    var canvas = document.querySelector('canvas');
-    canvas.height = video.videoHeight;
-    canvas.width = video.videoWidth;
-    var context = canvas.getContext('2d');
-    context.drawImage( video, 0, 0);
-    var link = document.createElement('a');
-    link.download = 'foto.png';
-    link.href = canvas.toDataURL();
-    link.textContent = 'Clique para Baixar a imagem';
-    document.body.appendChild(link);
-
-    
-});
+{
+    "recommendations" [
+        "esbenp.prettier-vscode"
+    ]
+}
