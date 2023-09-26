@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,10 +47,13 @@
         }
     </style>
 </head>
+
 <body>
 
+    <!-- FOTO DE FUNDO -->
 <div class="background"> 
 
+    <!-- CABEÇALHO  -->
     <header>
         <div class="row">
           <figure class="col-2 mx-auto log   ">
@@ -60,7 +64,10 @@
 
     <h1 class="text-center justify-content-center text-white .fs-1 mt-3"> Regras de Ouro </h1>
     
-    <main> 
+
+    <!-- CARDS REGRA DE OURO -->
+    <main>
+
         <div class="card mt-5">
         <h1 id="ancora01" class="mx-auto">1º REGRA DE OURO</h1>
         <P class="text-center text-break">DESLIGAR CIRCUITO</P>
@@ -75,7 +82,7 @@
         <img id="captured-photo" style="display: none;">
         </div>
 
-        <div class="card mt-5 espacoo">
+        <div class="card mt-5 ">
             <h1 id="ancora" class="mx-auto">2º REGRA DE OURO</h1>
             <P class="text-center">BLOQUEAR CIRCUITO</P>
             <h5 class="mx-auto mb-4 justify-content-centermt text-center mt-3 text-break">Atenção! Impeça que o circuito seja ligado durante a operação. </h5>
@@ -146,11 +153,11 @@
                             <div id="camera-feed"></div>
                             <canvas id="photo-canvas" style="display: none;"></canvas>
                             <img id="captured-photo" style="display: none;">
-                            </div>
-
-                            
+                            </div>                       
     </main>
  
+
+        <!-- BOTTON PRÓXIMA PÁGINA -->
     <div class="d-flex justify-content-center align-items-center">
         <div class="d-grid gap-2 d-md-block button">
           <a href="/Paginas/pgfinal.html" class="btn btn-light col-12 px-5 mt-2" type="button">Próxima Página</a>
@@ -161,6 +168,8 @@
 
 
 </div> 
+
+    <!-- JS HABILITAR CÂMERA -->
 
     <script>
         let videoStream;
@@ -224,6 +233,7 @@
             }
         });
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
